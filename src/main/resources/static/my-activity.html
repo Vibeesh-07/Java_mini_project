@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My activity — PSG iTech Lost &amp; Found</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="brand-logo">
+        <img src="/images/psg-itech-logo.png" class="college-logo" alt="PSG iTech logo">
+        <span class="brand-name">PSG <span class="highlight">iTech</span></span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle Navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="/index.html" class="nav-link">Home</a></li>
+        <li><a href="/browse.html" class="nav-link">Browse Items</a></li>
+        <li><a href="/report.html" class="nav-link">Report Item</a></li>
+        <li id="nav-my-activity"><a href="/my-activity.html" class="nav-link active">My Activity</a></li>
+        <li id="nav-admin" style="display: none;"><a href="/admin.html" class="nav-link" style="color: var(--purple);">Admin</a></li>
+      </ul>
+
+      <div class="nav-actions" id="nav-auth-actions">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h1>My Campus Activity</h1>
+          <p>Track your submitted reports, matches, and recovery claims</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <a href="/report.html?type=LOST" class="btn btn-outline-primary btn-sm">+ Report Lost</a>
+          <a href="/report.html?type=FOUND" class="btn btn-primary btn-sm">+ Report Found</a>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-btn-reports" onclick="switchActivityTab('reports')">
+          My Reports (<span id="count-reports">0</span>)
+        </button>
+        <button class="tab-btn" id="tab-btn-received" onclick="switchActivityTab('received')">
+          Incoming Claims (<span id="count-received">0</span>)
+        </button>
+        <button class="tab-btn" id="tab-btn-submitted" onclick="switchActivityTab('submitted')">
+          My Submitted Claims (<span id="count-submitted">0</span>)
+        </button>
+      </div>
+
+      <!-- Tab 1: My Reports -->
+      <div id="tab-content-reports">
+        <div id="my-reports-list" class="grid grid-cols-3">
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">Loading your reports...</div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Claims Received -->
+      <div id="tab-content-received" style="display: none;">
+        <div id="received-claims-list">
+          <div style="text-align: center; padding: 3rem;">Loading incoming claims...</div>
+        </div>
+      </div>
+
+      <!-- Tab 3: My Submitted Claims -->
+      <div id="tab-content-submitted" style="display: none;">
+        <div id="submitted-claims-list">
+          <div style="text-align: center; padding: 3rem;">Loading submitted claims...</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div><strong>PSG iTech</strong> &mdash; Lost &amp; Found Portal</div>
+      <div>Served directly via Spring Boot &bull; Vanilla JS &bull; Railway Ready</div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js?v=auth-feedback-20261118"></script>
+  <script src="/js/my-activity.js"></script>
+</body>
+</html>

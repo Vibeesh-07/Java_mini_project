@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create account — PSG iTech Lost &amp; Found</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="brand-logo">
+        <img src="/images/psg-itech-logo.png" class="college-logo" alt="PSG iTech logo">
+        <span class="brand-name">PSG <span class="highlight">iTech</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/index.html" class="nav-link">Home</a></li>
+        <li><a href="/browse.html" class="nav-link">Browse Items</a></li>
+        <li><a href="/report.html" class="nav-link">Report Item</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="/login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content" style="display: flex; align-items: center; justify-content: center;">
+    <div class="container" style="max-width: 480px;">
+      <div class="card" style="box-shadow: var(--shadow-lg);">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <h1 style="font-size: 1.85rem; margin-bottom: 0.5rem;">Create Account</h1>
+          <p>Use your PSG iTech email to report items, discover matches, and submit claims.</p>
+        </div>
+
+        <form id="register-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name <span class="required">*</span></label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g. John Doe" required minlength="2" maxlength="100">
+            <div id="err-name" class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address <span class="required">*</span></label>
+            <input type="email" id="reg-email" class="form-control" placeholder="e.g. name@psgitech.ac.in" required>
+            <span class="form-help">Only @psgitech.ac.in college accounts can register.</span>
+            <div id="err-email" class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-phone">Phone / WhatsApp <span style="color: var(--text-muted); font-weight: 400;">(optional)</span></label>
+            <input type="tel" id="reg-phone" class="form-control" placeholder="e.g. +91 98765 43210" maxlength="25">
+            <span class="form-help">Visible only to signed-in campus users on your item reports.</span>
+            <div id="err-contactPhone" class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password <span class="required">*</span></label>
+            <input type="password" id="reg-password" class="form-control" placeholder="At least 6 characters" required minlength="6">
+            <div id="err-password" class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-confirm">Confirm Password <span class="required">*</span></label>
+            <input type="password" id="reg-confirm" class="form-control" placeholder="Re-enter your password" required minlength="6">
+            <div id="err-confirm" class="form-error"></div>
+          </div>
+
+          <div id="register-general-error" class="form-error" style="margin-bottom: 1.25rem;"></div>
+          <div id="register-success" class="form-success" style="margin-bottom: 1.25rem;"></div>
+
+          <button type="submit" id="btn-register-submit" class="btn btn-primary btn-full" style="height: 2.85rem;">
+            Create Account
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+          Already have an account? <a href="/login.html" style="font-weight: 600;">Sign in here</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div><strong>PSG iTech</strong> &mdash; Lost &amp; Found Portal</div>
+      <div>Served directly via Spring Boot &bull; Vanilla JS &bull; Railway Ready</div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js?v=csp-fix-20261118"></script>
+  <script src="/js/register.js?v=csp-fix-20261118"></script>
+</body>
+</html>

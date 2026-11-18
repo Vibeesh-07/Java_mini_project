@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report an item — PSG iTech Lost &amp; Found</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="brand-logo">
+        <img src="/images/psg-itech-logo.png" class="college-logo" alt="PSG iTech logo">
+        <span class="brand-name">PSG <span class="highlight">iTech</span></span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle Navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="/index.html" class="nav-link">Home</a></li>
+        <li><a href="/browse.html" class="nav-link">Browse Items</a></li>
+        <li><a href="/report.html" class="nav-link active">Report Item</a></li>
+        <li id="nav-my-activity" style="display: none;"><a href="/my-activity.html" class="nav-link">My Activity</a></li>
+        <li id="nav-admin" style="display: none;"><a href="/admin.html" class="nav-link" style="color: var(--purple);">Admin</a></li>
+      </ul>
+
+      <div class="nav-actions" id="nav-auth-actions">
+        <a href="/login.html" class="btn btn-secondary btn-sm">Login</a>
+        <a href="/register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 780px;">
+      <div style="margin-bottom: 2rem; text-align: center;">
+        <h1 id="page-heading">Report an Item</h1>
+        <p id="page-subheading">Submit lost or found details to enable smart campus matching</p>
+      </div>
+
+      <div class="card">
+        <!-- LOST / FOUND Toggle Bar -->
+        <div id="type-selector-container" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+          <button type="button" id="tab-lost" class="btn btn-full" style="padding: 0.85rem; border: 2px solid var(--danger); background: var(--danger-light); color: var(--danger-dark);" onclick="selectReportType('LOST')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            I Lost Something
+          </button>
+          <button type="button" id="tab-found" class="btn btn-full" style="padding: 0.85rem; border: 2px solid var(--border); background: var(--bg-surface); color: var(--text-muted);" onclick="selectReportType('FOUND')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 11 12 14 22 4"/></svg>
+            I Found Something
+          </button>
+        </div>
+
+        <form id="report-form" onsubmit="return handleReportSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="report-title">Item Title / Headline <span class="required">*</span></label>
+            <input type="text" id="report-title" class="form-control" placeholder="e.g. Black Casio Scientific Calculator fx-991EX" required minlength="3" maxlength="150">
+            <span class="form-help">Include distinguishing words (brand, model, object type) for the matching engine.</span>
+            <div id="err-title" class="form-error"></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="report-category">Category <span class="required">*</span></label>
+              <select id="report-category" class="form-select" required>
+                <option value="">Select Category...</option>
+                <!-- Loaded dynamically -->
+              </select>
+              <div id="err-category" class="form-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="report-date">Incident Date <span class="required">*</span></label>
+              <input type="date" id="report-date" class="form-control" required>
+              <div id="err-date" class="form-error"></div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="report-color">Primary Color</label>
+              <input type="text" id="report-color" class="form-control" placeholder="e.g. Matte Black, Dark Blue, Silver" maxlength="50">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="report-brand">Brand / Manufacturer</label>
+              <input type="text" id="report-brand" class="form-control" placeholder="e.g. Apple, Casio, Dell, Jansport" maxlength="50">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="report-zone">Campus Zone <span class="required">*</span></label>
+              <select id="report-zone" class="form-select" required>
+                <option value="LIBRARY_COMPLEX">Library Complex</option>
+                <option value="SCIENCE_BUILDING">Science Building</option>
+                <option value="ENGINEERING_BLOCK">Engineering Block</option>
+                <option value="STUDENT_CENTER">Student Center / Cafeteria</option>
+                <option value="SPORTS_ARENA">Sports Arena / Gym</option>
+                <option value="RESIDENCE_HALLS">Residence Halls / Dorms</option>
+                <option value="ADMIN_BUILDING">Admin Building</option>
+                <option value="CAMPUS_GENERAL">Campus Grounds / General</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="report-location">Specific Location Name <span class="required">*</span></label>
+              <input type="text" id="report-location" class="form-control" placeholder="e.g. 2nd Floor Computer Lab 204, Table 5" required maxlength="100">
+              <div id="err-location" class="form-error"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="report-description">Detailed Description <span class="required">*</span></label>
+            <textarea id="report-description" class="form-control" rows="4" placeholder="Describe the item condition, where it was spotted or left behind, and any non-secret context." required minlength="5"></textarea>
+            <span class="form-help">Do not include secret identifying marks if reporting a FOUND item so you can verify claimants.</span>
+            <div id="err-description" class="form-error"></div>
+          </div>
+
+          <!-- Photo Attachment (Optional) -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 0.5rem; gap: 0.5rem;">
+              <label class="form-label" style="margin-bottom: 0;">
+                Attach Item Photo <span style="font-size: 0.825rem; font-weight: normal; color: var(--text-muted);">(Optional &mdash; JPEG, PNG, WebP up to 2MB)</span>
+              </label>
+              <span id="found-camera-hint" style="font-size: 0.825rem; color: #065f46; font-weight: 600; background: #ecfdf5; padding: 0.2rem 0.6rem; border-radius: var(--radius-full); border: 1px solid #a7f3d0; display: none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                Tip: Snap a quick photo right where you found it!
+              </span>
+            </div>
+
+            <div id="image-upload-zone" class="image-upload-zone">
+              <!-- Hidden native file inputs -->
+              <input type="file" id="report-image-input" accept="image/jpeg,image/png,image/webp,image/gif" style="display: none;">
+              <input type="file" id="camera-fallback-input" accept="image/*" capture="environment" style="display: none;">
+
+              <!-- Initial Upload / Camera Prompt -->
+              <div id="image-upload-prompt" class="image-upload-prompt">
+                <div style="margin-bottom: 0.75rem;">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--primary);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+                <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem;">Add a photo of the item</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">Browse from your local storage or take a photo with your device camera</div>
+
+                <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                  <button type="button" id="btn-browse-file" class="btn btn-outline-primary btn-sm" onclick="triggerFileBrowser(event)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    Browse Local Storage
+                  </button>
+
+                  <button type="button" id="btn-open-camera" class="btn btn-outline-success btn-sm" onclick="triggerCameraCapture(event)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    Take Photo with Camera
+                  </button>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">(You can also drag &amp; drop an image file here)</div>
+              </div>
+
+              <!-- Image Preview Container -->
+              <div id="image-preview-container" class="image-preview-container" style="display: none;">
+                <img id="image-preview" src="" alt="Item Preview" class="image-preview-thumbnail">
+                <div class="image-preview-details">
+                  <div id="image-preview-name" class="image-preview-name">photo.jpg</div>
+                  <div id="image-preview-size" class="image-preview-size">0 KB</div>
+                  <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="triggerFileBrowser(event)">
+                      Browse New File
+                    </button>
+                    <button type="button" class="btn btn-outline-success btn-sm" onclick="triggerCameraCapture(event)">
+                      Retake with Camera
+                    </button>
+                    <button type="button" id="btn-remove-image" class="btn btn-outline-danger btn-sm" onclick="removeAttachedPhoto()">
+                      Remove Photo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="err-image" class="form-error"></div>
+          </div>
+
+          <div id="form-general-error" class="form-error" style="margin-bottom: 1rem;"></div>
+
+          <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+            <a href="/browse.html" class="btn btn-secondary">Cancel</a>
+            <button type="submit" id="btn-submit-report" class="btn btn-primary" style="min-width: 160px;">
+              Publish Report
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Live Camera Capture Modal -->
+  <div id="camera-modal" class="camera-modal" style="display: none;">
+    <div class="camera-modal-backdrop" onclick="closeCameraModal()"></div>
+    <div class="camera-modal-content">
+      <div class="camera-modal-header">
+        <h3 style="font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Capture Item Photo
+        </h3>
+        <button type="button" class="lightbox-close" style="position: static; width: 32px; height: 32px; font-size: 1.25rem; color: var(--text-main); background: transparent;" onclick="closeCameraModal()">&times;</button>
+      </div>
+      <div class="camera-viewport-wrap">
+        <video id="camera-video-stream" autoplay playsinline muted></video>
+        <canvas id="camera-capture-canvas" style="display: none;"></canvas>
+        <div id="camera-loading-overlay" class="camera-loading-overlay">
+          <span>Accessing camera hardware...</span>
+        </div>
+      </div>
+      <div class="camera-modal-actions">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeCameraModal()">Cancel</button>
+        <button type="button" id="btn-snap-capture" class="btn btn-success btn-sm" onclick="captureCameraPhoto()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          Snap &amp; Use Photo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div><strong>PSG iTech</strong> &mdash; Lost &amp; Found Portal</div>
+      <div>Served directly via Spring Boot &bull; Vanilla JS &bull; Railway Ready</div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/report.js"></script>
+</body>
+</html>

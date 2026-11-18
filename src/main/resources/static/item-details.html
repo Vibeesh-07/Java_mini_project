@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item details — PSG iTech Lost &amp; Found</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="brand-logo">
+        <img src="/images/psg-itech-logo.png" class="college-logo" alt="PSG iTech logo">
+        <span class="brand-name">PSG <span class="highlight">iTech</span></span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle Navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="/index.html" class="nav-link">Home</a></li>
+        <li><a href="/browse.html" class="nav-link">Browse Items</a></li>
+        <li><a href="/report.html" class="nav-link">Report Item</a></li>
+        <li id="nav-my-activity" style="display: none;"><a href="/my-activity.html" class="nav-link">My Activity</a></li>
+        <li id="nav-admin" style="display: none;"><a href="/admin.html" class="nav-link" style="color: var(--purple);">Admin</a></li>
+      </ul>
+
+      <div class="nav-actions" id="nav-auth-actions">
+        <a href="/login.html" class="btn btn-secondary btn-sm">Login</a>
+        <a href="/register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <div style="margin-bottom: 1.5rem;">
+        <a href="/browse.html" style="font-size: 0.9rem; color: var(--text-muted);">&larr; Back to Browse Items</a>
+      </div>
+
+      <div id="details-loading" style="text-align: center; padding: 4rem;">
+        <p>Loading item details...</p>
+      </div>
+
+      <div id="details-content" style="display: none;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+          
+          <!-- Main Left Column -->
+          <div>
+            <div class="card" style="margin-bottom: 2rem;">
+              <div class="card-header-bar">
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                  <span id="detail-type-badge" class="badge">TYPE</span>
+                  <span id="detail-status-badge" class="badge">STATUS</span>
+                </div>
+                <span id="detail-date" style="font-size: 0.85rem; color: var(--text-muted);"></span>
+              </div>
+
+              <!-- Item Photo Card (Visible if photo attached) -->
+              <div id="detail-photo-container" style="display: none; margin-bottom: 1.5rem;">
+                <div class="item-photo-card">
+                  <img id="detail-photo-img" src="" alt="Item Photo" class="item-detail-img" onclick="openPhotoLightbox()">
+                  <div class="item-photo-caption">Click photo to inspect in high resolution</div>
+                </div>
+              </div>
+
+              <h1 id="detail-title" style="font-size: 1.85rem; margin-bottom: 1rem;">Item Title</h1>
+
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; background: var(--bg-alt); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                <div>
+                  <span style="color: var(--text-muted);">Category:</span>
+                  <strong id="detail-category" style="display: block; color: var(--text-main);">-</strong>
+                </div>
+                <div>
+                  <span style="color: var(--text-muted);">Approximate Location:</span>
+                  <strong id="detail-location" style="display: block; color: var(--text-main);">-</strong>
+                </div>
+                <div>
+                  <span style="color: var(--text-muted);">Color:</span>
+                  <strong id="detail-color" style="display: block; color: var(--text-main);">-</strong>
+                </div>
+                <div>
+                  <span style="color: var(--text-muted);">Brand / Make:</span>
+                  <strong id="detail-brand" style="display: block; color: var(--text-main);">-</strong>
+                </div>
+                <div>
+                  <span style="color: var(--text-muted);">Incident Date:</span>
+                  <strong id="detail-incident-date" style="display: block; color: var(--text-main);">-</strong>
+                </div>
+                <div>
+                  <span style="color: var(--text-muted);">Campus Zone:</span>
+                  <strong id="detail-zone" style="display: block; color: var(--text-main);">-</strong>
+                </div>
+              </div>
+
+              <h3 style="margin-bottom: 0.5rem;">Description &amp; Context</h3>
+              <p id="detail-description" style="line-height: 1.7; color: var(--text-main); white-space: pre-wrap;">-</p>
+
+              <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-muted);">
+                <span>Reported by: <strong id="detail-reporter">-</strong></span>
+                <span id="detail-created-at">Reported on -</span>
+              </div>
+
+              <div id="contact-card" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--primary-light); border-radius: var(--radius-md);">
+                <strong>Contact the reporter</strong>
+                <div id="detail-contact" style="margin-top: 0.35rem; word-break: break-word;"></div>
+              </div>
+              <div id="contact-login-note" style="display: none; margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);">Sign in to view the reporter’s contact details.</div>
+
+              <div id="office-handover-card" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--success-light); border-radius: var(--radius-md);">
+                <strong>This item is now at a campus office</strong>
+                <div id="detail-office-handover" style="margin-top: 0.35rem; white-space: pre-wrap;"></div>
+              </div>
+            </div>
+
+            <!-- Smart Match Suggestions Section -->
+            <div class="card" id="matches-card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="color: var(--purple); display: flex; align-items: center;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </span>
+                  <h3>Automated Match Suggestions</h3>
+                </div>
+                <span class="badge badge-match" id="matches-count-badge">0 Matches</span>
+              </div>
+
+              <p style="font-size: 0.9rem; margin-bottom: 1.25rem;">
+                Deterministic matching engine comparing against eligible counter-reports across categories, keywords, colors, campus zones, and dates.
+              </p>
+
+              <div id="matches-list">
+                <!-- Injected by js/item-details.js -->
+              </div>
+            </div>
+
+            <!-- Claims Review Section (Visible to Finder or Admin) -->
+            <div class="card" id="claims-review-card" style="display: none; margin-top: 2rem;">
+              <h3 style="margin-bottom: 0.5rem;">Incoming Claims on this Item</h3>
+              <p style="font-size: 0.9rem; margin-bottom: 1.25rem;">Review private proof submitted by claimants to verify ownership.</p>
+              <div id="claims-review-list"></div>
+            </div>
+
+          </div>
+
+          <!-- Sidebar Actions Column -->
+          <div>
+            <!-- Owner Actions Box -->
+            <div class="card" id="owner-actions-box" style="display: none; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
+              <h4 style="margin-bottom: 0.5rem;">Manage Your Report</h4>
+              <p style="font-size: 0.85rem; margin-bottom: 1rem;">You are the creator of this report.</p>
+
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <button id="btn-edit-report" class="btn btn-secondary btn-full btn-sm">Edit Report Details</button>
+                <button id="btn-resolve-report" class="btn btn-success btn-full btn-sm">Mark as Recovered / Resolved</button>
+                <button id="btn-handover-office" class="btn btn-outline-primary btn-full btn-sm" style="display: none;">Hand Over to Campus Office</button>
+                <button id="btn-cancel-report" class="btn btn-danger btn-full btn-sm">Cancel / Close Report</button>
+              </div>
+            </div>
+
+            <!-- Claim Submission Box (for FOUND items by non-owner) -->
+            <div class="card" id="claim-submission-box" style="display: none;">
+              <h4 style="margin-bottom: 0.5rem;">Is this your belonging?</h4>
+              <p style="font-size: 0.85rem; margin-bottom: 1.25rem;">
+                Submit a claim with distinguishing proof (e.g. engravings, wallpaper, serial digits, unique contents). The finder will review your claim privately.
+              </p>
+
+              <form id="claim-form" onsubmit="return handleClaimSubmit(event)">
+                <div class="form-group">
+                  <label class="form-label" for="claim-reason">Why do you believe this is yours? <span class="required">*</span></label>
+                  <textarea id="claim-reason" class="form-control" rows="3" placeholder="Where did you lose it? When? Any key circumstances?" required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="proof-details">Private Identifying Proof <span class="required">*</span></label>
+                  <textarea id="proof-details" class="form-control" rows="3" placeholder="Provide details NOT visible in the photos or public description to prove ownership." required></textarea>
+                  <span class="form-help">Only the finder and admin can see this proof.</span>
+                </div>
+
+                <button type="submit" id="btn-submit-claim" class="btn btn-primary btn-full">
+                  Submit Claim for Verification
+                </button>
+              </form>
+            </div>
+
+            <!-- Security & Safety Notice -->
+            <div class="card" style="margin-top: 1.5rem; background: var(--bg-alt);">
+              <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Campus Recovery Safety
+              </h4>
+              <p style="font-size: 0.825rem; line-height: 1.6;">
+                Always arrange handovers in public, well-lit campus zones like the Library Circulation Desk or Campus Security office. Never send money for lost items.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div><strong>PSG iTech</strong> &mdash; Lost &amp; Found Portal</div>
+      <div>Served directly via Spring Boot &bull; Vanilla JS &bull; Railway Ready</div>
+    </div>
+  </footer>
+
+  <!-- Photo Lightbox Modal -->
+  <div id="photo-lightbox" class="lightbox-modal" onclick="closePhotoLightbox(event)">
+    <button type="button" class="lightbox-close" aria-label="Close photo preview" onclick="closePhotoLightbox(event)">&times;</button>
+    <img id="lightbox-img" class="lightbox-img" src="" alt="Full view" onclick="event.stopPropagation()">
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/item-details.js"></script>
+</body>
+</html>

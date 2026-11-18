@@ -1,0 +1,77 @@
+server:
+  port: ${PORT:8080}
+  address: 0.0.0.0
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${SESSION_COOKIE_SECURE:false}
+        name: REFIND_SESSIONID
+
+spring:
+  application:
+    name: refind
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://${MYSQLHOST:localhost}:${MYSQLPORT:3306}/${MYSQLDATABASE:refind_db}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8}
+    username: ${MYSQLUSER:root}
+    password: ${MYSQLPASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQLDialect
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    locations: classpath:db/migration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+
+app:
+  admin:
+    bootstrap:
+      enabled: ${ADMIN_BOOTSTRAP_ENABLED:true}
+      email: ${ADMIN_EMAIL:admin@psgitech.ac.in}
+      password: ${ADMIN_PASSWORD:Admin@12345}
+      name: ${ADMIN_NAME:PSG iTech Administrator}
+  college:
+    name: PSG iTech
+    email-domain: psgitech.ac.in
+  matching:
+    min-score-threshold: 25
+  notifications:
+    # Enable only after SMTP credentials are configured in the deployment environment.
+    enabled: ${MATCH_NOTIFICATIONS_ENABLED:false}
+    cron: ${MATCH_NOTIFICATIONS_CRON:0 0 8 * * *}
+    from: ${MATCH_NOTIFICATIONS_FROM:lostandfound@psgitech.ac.in}
+
+logging:
+  level:
+    root: INFO
+    com.refind: INFO
+    org.springframework.security: WARN
+    org.hibernate: WARN
+    org.flywaydb: INFO

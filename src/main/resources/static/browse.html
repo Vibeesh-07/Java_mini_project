@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse reports — PSG iTech Lost &amp; Found</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="brand-logo">
+        <img src="/images/psg-itech-logo.png" class="college-logo" alt="PSG iTech logo">
+        <span class="brand-name">PSG <span class="highlight">iTech</span></span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle Navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="/index.html" class="nav-link">Home</a></li>
+        <li><a href="/browse.html" class="nav-link active">Browse Items</a></li>
+        <li><a href="/report.html" class="nav-link">Report Item</a></li>
+        <li id="nav-my-activity" style="display: none;"><a href="/my-activity.html" class="nav-link">My Activity</a></li>
+        <li id="nav-admin" style="display: none;"><a href="/admin.html" class="nav-link" style="color: var(--purple);">Admin</a></li>
+      </ul>
+
+      <div class="nav-actions" id="nav-auth-actions">
+        <a href="/login.html" class="btn btn-secondary btn-sm">Login</a>
+        <a href="/register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <div style="margin-bottom: 2rem;">
+        <h1>Browse Lost &amp; Found Items</h1>
+        <p>Explore reports submitted by fellow students and staff across the campus</p>
+      </div>
+
+      <!-- Filters & Search Toolbar -->
+      <div class="filter-bar">
+        <form id="filter-form" onsubmit="return handleSearchSubmit(event)">
+          <div class="filter-grid">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="search-input">Keyword Search</label>
+              <input type="text" id="search-input" class="form-control" placeholder="Search title, details, color, brand...">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="filter-type">Item Type</label>
+              <select id="filter-type" class="form-select">
+                <option value="">All Types</option>
+                <option value="LOST">Lost Belongings</option>
+                <option value="FOUND">Found Belongings</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="filter-category">Category</label>
+              <select id="filter-category" class="form-select">
+                <option value="">All Categories</option>
+                <!-- Loaded dynamically -->
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="filter-zone">Campus Zone</label>
+              <select id="filter-zone" class="form-select">
+                <option value="">All Campus Zones</option>
+                <option value="LIBRARY_COMPLEX">Library Complex</option>
+                <option value="SCIENCE_BUILDING">Science Building</option>
+                <option value="ENGINEERING_BLOCK">Engineering Block</option>
+                <option value="STUDENT_CENTER">Student Center / Cafeteria</option>
+                <option value="SPORTS_ARENA">Sports Arena / Gym</option>
+                <option value="RESIDENCE_HALLS">Residence Halls / Dorms</option>
+                <option value="ADMIN_BUILDING">Admin Building</option>
+                <option value="CAMPUS_GENERAL">Campus Grounds / General</option>
+              </select>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="submit" class="btn btn-primary" style="height: 2.6rem;">Filter</button>
+              <button type="button" class="btn btn-secondary" style="height: 2.6rem;" onclick="resetFilters()">Reset</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Active Filter Status & Sort Header -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div id="results-count" style="font-weight: 600; color: var(--text-muted);">
+          Loading reports...
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <label for="sort-select" style="font-size: 0.875rem; font-weight: 500; color: var(--text-muted);">Sort By:</label>
+          <select id="sort-select" class="form-select" style="width: auto; padding: 0.4rem 0.75rem;" onchange="handleSortChange()">
+            <option value="createdAt,desc">Newest First</option>
+            <option value="createdAt,asc">Oldest First</option>
+            <option value="incidentDate,desc">Recent Incident Date</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Items Grid -->
+      <div id="items-grid" class="grid grid-cols-3">
+        <!-- Rendered by js/browse.js -->
+      </div>
+
+      <!-- Pagination Controls -->
+      <div id="pagination-container" class="pagination" style="display: none;">
+        <button id="btn-prev-page" class="btn btn-secondary btn-sm" onclick="changePage(-1)">&larr; Previous</button>
+        <span id="page-indicator" style="font-size: 0.9rem; font-weight: 600; padding: 0 1rem; color: var(--text-muted);">Page 1 of 1</span>
+        <button id="btn-next-page" class="btn btn-secondary btn-sm" onclick="changePage(1)">Next &rarr;</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div><strong>PSG iTech</strong> &mdash; Lost &amp; Found Portal</div>
+      <div>Served directly via Spring Boot &bull; Vanilla JS &bull; Railway Ready</div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/browse.js"></script>
+</body>
+</html>

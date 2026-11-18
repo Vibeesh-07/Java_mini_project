@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PSG iTech — Lost &amp; Found</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="brand-logo">
+        <img src="/images/psg-itech-logo.png" class="college-logo" alt="PSG iTech logo">
+        <span class="brand-name">PSG <span class="highlight">iTech</span></span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle Navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <ul class="nav-links">
+        <li><a href="/index.html" class="nav-link active">Home</a></li>
+        <li><a href="/browse.html" class="nav-link">Browse Items</a></li>
+        <li><a href="/report.html" class="nav-link">Report Item</a></li>
+        <li id="nav-my-activity" style="display: none;"><a href="/my-activity.html" class="nav-link">My Activity</a></li>
+        <li id="nav-admin" style="display: none;"><a href="/admin.html" class="nav-link" style="color: var(--purple);">Admin</a></li>
+      </ul>
+
+      <div class="nav-actions" id="nav-auth-actions">
+        <!-- Injected dynamically by api.js -->
+        <a href="/login.html" class="btn btn-secondary btn-sm">Login</a>
+        <a href="/register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div style="display: inline-block; padding: 0.35rem 0.85rem; background: #e0e7ff; color: #4338ca; border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 700; margin-bottom: 1.25rem;">
+        PSG iTech Lost &amp; Found
+      </div>
+      <h1 class="hero-title">
+        Lost something? <br><span class="gradient-text">Let's help you find it.</span>
+      </h1>
+      <p class="hero-subtitle">
+        A simple, secure way for the PSG iTech community to reconnect lost belongings with their owners.
+      </p>
+
+      <!-- Quick Search Bar -->
+      <form id="hero-search-form" style="max-width: 600px; margin: 0 auto 2rem; display: flex; gap: 0.5rem;" onsubmit="return handleHeroSearch(event)">
+        <input type="text" id="hero-query" class="form-control" placeholder="Search for keys, laptop, ID card, backpack..." style="height: 3.2rem; font-size: 1rem; border-radius: var(--radius-md);">
+        <button type="submit" class="btn btn-primary" style="height: 3.2rem; padding: 0 1.5rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search
+        </button>
+      </form>
+
+      <div class="hero-actions">
+        <a href="/report.html?type=LOST" class="btn btn-danger btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          I Lost An Item
+        </a>
+        <a href="/report.html?type=FOUND" class="btn btn-success btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 11 12 14 22 4"/></svg>
+          I Found An Item
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Real Statistics Counter Bar -->
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-value" id="stat-lost">-</div>
+        <div class="stat-label">Lost Reports</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-found" style="color: var(--success);">-</div>
+        <div class="stat-label">Found Belongings</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-resolved" style="color: var(--purple);">-</div>
+        <div class="stat-label">Items Recovered</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-pending" style="color: var(--warning);">-</div>
+        <div class="stat-label">Active Claims</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works Section -->
+  <section class="main-content">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 2.5rem; margin-top: 1.5rem;">
+        <h2 style="font-size: 1.85rem; margin-bottom: 0.5rem;">How it works at PSG iTech</h2>
+        <p>A simple 3-step recovery workflow powered by deterministic matching</p>
+      </div>
+
+      <div class="grid grid-cols-3" style="margin-bottom: 4rem;">
+        <div class="card" style="text-align: center;">
+          <div style="width: 3.5rem; height: 3.5rem; background: var(--primary-light); color: var(--primary); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3>1. Report Belonging</h3>
+          <p style="margin-top: 0.5rem;">Submit details about the lost or found item including color, brand, approximate location, and incident date.</p>
+        </div>
+
+        <div class="card" style="text-align: center;">
+          <div style="width: 3.5rem; height: 3.5rem; background: var(--purple-light); color: var(--purple); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>2. Smart Match Score</h3>
+          <p style="margin-top: 0.5rem;">The backend matching engine evaluates category, keyword similarity, campus zones, and dates with explainable scores up to 100.</p>
+        </div>
+
+        <div class="card" style="text-align: center;">
+          <div style="width: 3.5rem; height: 3.5rem; background: var(--success-light); color: var(--success-dark); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>3. Secure Claim & Recovery</h3>
+          <p style="margin-top: 0.5rem;">File a private claim with identifying proof. The finder verifies and approves the claim, returning the item safely.</p>
+        </div>
+      </div>
+
+      <!-- Recently Reported Items -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+        <div>
+          <h2>Recently Reported Items</h2>
+          <p>Recent lost and found notices from around the campus</p>
+        </div>
+        <a href="/browse.html" class="btn btn-secondary btn-sm">View All &rarr;</a>
+      </div>
+
+      <div id="recent-items-grid" class="grid grid-cols-3">
+        <!-- Rendered by js/home.js -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">Loading recent items...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <strong>PSG iTech</strong> &mdash; Lost &amp; Found Portal
+      </div>
+      <div>
+        A safer campus recovery service for students and staff
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/home.js"></script>
+</body>
+</html>

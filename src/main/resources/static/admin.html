@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin dashboard — PSG iTech Lost &amp; Found</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/index.html" class="brand-logo">
+        <img src="/images/psg-itech-logo.png" class="college-logo" alt="PSG iTech logo">
+        <span class="brand-name">PSG <span class="highlight">iTech</span></span> <span style="font-size: 0.8rem; background: var(--purple-light); color: var(--purple); padding: 0.2rem 0.6rem; border-radius: var(--radius-full); margin-left: 0.4rem;">Admin</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/index.html" class="nav-link">Home</a></li>
+        <li><a href="/browse.html" class="nav-link">Browse Items</a></li>
+        <li><a href="/report.html" class="nav-link">Report Item</a></li>
+        <li><a href="/my-activity.html" class="nav-link">My Activity</a></li>
+        <li><a href="/admin.html" class="nav-link active" style="color: var(--purple);">Admin</a></li>
+      </ul>
+
+      <div class="nav-actions" id="nav-auth-actions">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <div style="margin-bottom: 2rem;">
+        <h1>Administrator Dashboard</h1>
+        <p>Live campus system metrics, content moderation, and dispute management</p>
+      </div>
+
+      <!-- Real Metrics Grid -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 2.5rem;">
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="admin-stat-users">-</div>
+          <div class="stat-label">Registered Users</div>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 800; color: var(--text-main);" id="admin-stat-reports">-</div>
+          <div class="stat-label">Total Reports</div>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 800; color: var(--success);" id="admin-stat-resolved">-</div>
+          <div class="stat-label">Resolved Recoveries</div>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 800; color: var(--warning);" id="admin-stat-claims">-</div>
+          <div class="stat-label">Pending Claims</div>
+        </div>
+      </div>
+
+      <!-- Admin Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-btn-reports" onclick="switchAdminTab('reports')">
+          Manage All Reports
+        </button>
+        <button class="tab-btn" id="tab-btn-claims" onclick="switchAdminTab('claims')">
+          All Recovery Claims
+        </button>
+      </div>
+
+      <!-- Reports Tab Content -->
+      <div id="admin-tab-reports">
+        <div class="card" style="overflow-x: auto; padding: 0;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead>
+              <tr style="background: var(--bg-alt); border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">
+                <th style="padding: 1rem;">ID</th>
+                <th style="padding: 1rem;">Type</th>
+                <th style="padding: 1rem;">Title</th>
+                <th style="padding: 1rem;">Category</th>
+                <th style="padding: 1rem;">Location</th>
+                <th style="padding: 1rem;">Status</th>
+                <th style="padding: 1rem;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-reports-table-body">
+              <tr><td colspan="7" style="text-align: center; padding: 2rem;">Loading reports...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Claims Tab Content -->
+      <div id="admin-tab-claims" style="display: none;">
+        <div class="card" style="overflow-x: auto; padding: 0;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead>
+              <tr style="background: var(--bg-alt); border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">
+                <th style="padding: 1rem;">ID</th>
+                <th style="padding: 1rem;">Report</th>
+                <th style="padding: 1rem;">Claimant</th>
+                <th style="padding: 1rem;">Status</th>
+                <th style="padding: 1rem;">Claim Reason</th>
+                <th style="padding: 1rem;">Private Proof</th>
+                <th style="padding: 1rem;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-claims-table-body">
+              <tr><td colspan="7" style="text-align: center; padding: 2rem;">Loading claims...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div><strong>PSG iTech</strong> &mdash; Lost &amp; Found Portal</div>
+      <div>Admin Console &bull; Java 21 &bull; Spring Boot 3 &bull; Railway Ready</div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
